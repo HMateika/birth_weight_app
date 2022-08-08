@@ -23,6 +23,7 @@ jobs:
     docker:
       - image: cimg/python:3.10.5
       - image: google/cloud-sdk
+        command: [mongod, --smallfiles]
       
     parallelism: 4
     resource_class: large
