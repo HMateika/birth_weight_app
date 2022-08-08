@@ -53,7 +53,7 @@ workflows:
   eda-check:
     jobs:
       - build-and-test
-          filters:
-            branches:
-              only:
-                - main
+        filters:
+          branches:
+            only:
+              - main
