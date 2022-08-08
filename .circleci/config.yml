@@ -32,10 +32,6 @@ jobs:
     steps:
       - checkout
        # Download and cache dependencies
-      - run:
-        name: get python
-        command: |
-          apt-get install python3-venv
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}
