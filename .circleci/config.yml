@@ -21,9 +21,8 @@ jobs:
     # The executor is the environment in which the steps below will be executed - below will use a python 3.10.2 container
     # Change the version below to your required version of python
     docker:
-      - image: cimg/python:3.10.5
       - image: google/cloud-sdk
-        command: [mongod, --smallfiles]
+     
       
     parallelism: 4
     resource_class: large
@@ -42,9 +41,10 @@ jobs:
           name: install dependencies
           no_output_timeout: 30m
           command: |
+            apt install -y python-pip
             python3 -m venv venv
             . venv/bin/activate
-            pip3 install -r requirements.txt
+            python3 -m install -r requirements.txt
       - save_cache:
           paths:
             - ./venv
