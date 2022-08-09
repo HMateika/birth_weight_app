@@ -23,8 +23,6 @@ jobs:
     docker:
       - image: google/cloud-sdk
      
-      
-    parallelism: 4
     resource_class: large
     
     working_directory: ~/birth_weight_app
