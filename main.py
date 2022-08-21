@@ -1,7 +1,8 @@
 #import Flask 
 from flask import Flask, render_template, request
 import numpy as np
-#create an instance of Flask
+import joblib
+
 app = Flask(__name__)
 @app.route('/')
 def home():
@@ -10,7 +11,7 @@ def home():
 @app.route('/predict/', methods=['GET','POST'])
 def predict():
     if request.method == "POST":
-        #get form data
+        
         age_of_mother = request.form.get('Age of Mother')
         oe_gestational = request.form.get('OE Gestational Age')
         lmp_gestational = request.form.get('LMP Gestational Age')
@@ -24,20 +25,16 @@ def predict():
         pass
     pass
 def preprocessDataAndPredict(age_of_mother, oe_gestational, lmp_gestational, bmi, prenatal_visits):
-    #put all inputs in array
-    test_data = [age_of_mother, oe_gestational, lmp_gestational, bmi, prenatal_visits]
-    print(test_data)
-    #convert value data into numpy array
-    test_data = np.array(test_data).astype(np.float)
-    #reshape array
-    test_data = test_data.reshape(1,-1)
-    print(test_data)
-    #open file
-    #load trained model
-    trained_model = tf.saved_model.load("/Users/harri/birth_weight_app/model_saved_model.pb")
-    #predict
-    prediction = trained_model.predict(test_data)
+    data = [age_of_mother, oe_gestational, lmp_gestational, bmi, prenatal_visits]
+    print(data)
+    data = np.array(data).astype(np.float64)
+    data = data.reshape(1,-1)
+    print(data)
+    file = open("birth_model.pkl",'rb')
+    trained_model = joblib.load(file)
+    prediction = trained_model.predict(data)
     return prediction
+
     pass
 if __name__ == '__main__':
     app.run(debug=True)
